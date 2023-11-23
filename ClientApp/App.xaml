@@ -4,10 +4,10 @@
              xmlns:local="clr-namespace:ClientApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
-        
-        
-        
+
+
+
+
         <!-- Main menu buttons style -->
         <Style x:Key="menuButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
@@ -62,7 +62,8 @@
 
         <Style x:Key="menuButtonText" TargetType="TextBlock">
             <Setter Property="Margin" Value="10 0 0 0" />
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="20" />
+            <!--<Setter Property="FontFamily" Value="SegoiUI" />-->
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -73,8 +74,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="20" BorderThickness="3 0 0 0"
-                         Padding="20 0">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20" BorderThickness="3 0 0 0" Padding="20 0">
                             <Border.BorderBrush>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Color="#d489ff" Offset="0"/>
@@ -82,6 +82,20 @@
                                     <GradientStop Color="#6ad8fd" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.BorderBrush>
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="staticMenuButton" TargetType="Button" BasedOn="{StaticResource menuButton}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#3f4f30" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20" BorderThickness="3 0 0 0" Padding="20 0">
                             <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
