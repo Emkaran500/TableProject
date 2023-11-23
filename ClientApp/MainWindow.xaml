@@ -30,6 +30,7 @@
                         <GradientStop Color="#cae3b3" Offset="0"/>
                         <!--<GradientStop Color="#bbdefb" Offset="0"/>-->
                         <GradientStop Color="#e3f2fd" Offset="1"/>
+                        
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
@@ -44,18 +45,34 @@
             <!-- Main menu -->
             <StackPanel Width="200" Margin="10 30 0 30">
                 <TextBlock Text="Name" Style="{StaticResource menuButtonText}"/>
-                <TextBox Margin="0 5 40 5" Foreground="#443f5e" FontSize="20" VerticalAlignment="Bottom"  Cursor="IBeam" Width="170"/>
+                <TextBox Margin="0 5 40 5" Foreground="#443f5e" FontSize="20" VerticalAlignment="Bottom" Cursor="IBeam" Width="170"/>
                 <TextBlock Text="Table" Style="{StaticResource menuButtonText}"/>
-                <TextBox Margin="0 5 40 5" Foreground="#443f5e" FontSize="20" VerticalAlignment="Bottom"  Cursor="IBeam" Width="170"/>
+                <TextBox Margin="0 5 40 5" Foreground="#443f5e" FontSize="20" VerticalAlignment="Bottom" Cursor="IBeam" Width="170"/>
 
+                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
+                <Button Style="{StaticResource staticMenuButton}" Content="       ▲" HorizontalAlignment="Left" FontSize="26"/>
+                <Button Style="{StaticResource staticMenuButton}" Content="       ▼" HorizontalAlignment="Left" FontSize="26"/>
 
-                <Separator Background="#08206E" Width="150" Margin="10 " HorizontalAlignment="Left"/>
+                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
+                <Button Style="{StaticResource menuButton}" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Create" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+                </Button>
 
+                <Button Style="{StaticResource menuButton}" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Delete" Style="{StaticResource menuButtonText}" />
+                    </StackPanel>
+                </Button>
+                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
                 <Button Style="{StaticResource menuButton}" Click="ExitButton_Click" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Exit" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
+
+            
             </StackPanel>
 
 
