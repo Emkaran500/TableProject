@@ -4,6 +4,98 @@
              xmlns:local="clr-namespace:ClientApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
+        
+        
+        
+        <!-- Main menu buttons style -->
+        <Style x:Key="menuButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#443f5e" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="170" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Margin" Value="0 5 0 5" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20" BorderThickness="3 0 0 0"
+                         BorderBrush="Transparent" Padding="10 0 10 0">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#f7f6f4" />
+                    <Setter Property="Foreground" Value="#443f5e" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="20" BorderThickness="3 0 0 0" Padding="20 0">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#dbdb12" Offset="0"/>
+                                            <GradientStop Color="#73db12" Offset="0.5"/>
+                                            <GradientStop Color="#6ad8fd" Offset="1"/>
+
+                                            <!--<GradientStop Color="#d489ff" Offset="0"/>
+                                            <GradientStop Color="#7985ff" Offset="0.5"/>
+                                            <GradientStop Color="#6ad8fd" Offset="1"/>-->
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseCaptured" Value="True">
+                    <Setter Property="Background" Value="#336699" />
+                    <Setter Property="Foreground" Value="#f9f9f9" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="menuButtonText" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10 0 0 0" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Main menu selected button style -->
+        <Style x:Key="activeMenuButton" TargetType="Button" BasedOn="{StaticResource menuButton}">
+            <Setter Property="Background" Value="#443f5e" />
+            <Setter Property="Foreground" Value="#f7f6f4" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20" BorderThickness="3 0 0 0"
+                         Padding="20 0">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#d489ff" Offset="0"/>
+                                    <GradientStop Color="#7985ff" Offset="0.5"/>
+                                    <GradientStop Color="#6ad8fd" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sections title text style -->
+        <Style x:Key="titleText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#443f5e"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Application.Resources>
 </Application>
