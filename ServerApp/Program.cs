@@ -8,7 +8,7 @@ httpListener.Prefixes.Add($"http://*:{port}/");
 httpListener.Start();
 System.Console.WriteLine($"Server started on '{port}' port");
 
-while (true)
+while (false)
 {
     var context = await httpListener.GetContextAsync();
     var rawUrl = context.Request.RawUrl?.Trim('/').ToLower();
