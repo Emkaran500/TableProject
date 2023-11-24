@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ServerApp.Data.Configurations;
 using SharedLib.Models;
 
 namespace ServerApp.Data
@@ -21,6 +22,15 @@ namespace ServerApp.Data
             {
                 optionsBuilder.UseSqlServer(connectionString: "Server=localhost;Database=HoldDb;User Id=myUsername;Password=myPassword;TrustServerCertificate=True;");
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new TableConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientConfiguration());
+            modelBuilder.ApplyConfiguration(new OperatorConfiguration());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
