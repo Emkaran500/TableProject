@@ -10,6 +10,10 @@ namespace ServerApp.Data.Configurations
         {
             tableBuilder.HasKey(t => t.Id);
 
+            tableBuilder.HasOne(t => t.Operator).WithOne(o => o.Table).HasForeignKey<Table>(t => t.OperatorId);
+
+            tableBuilder.HasMany(t => t.Clients).WithOne(c => c.Table).HasForeignKey(c => c.TableId);
+
             tableBuilder.Property(t => t.TableNumber).IsRequired().HasColumnName("Table number");
 
             tableBuilder.Property(t => t.OperatorId).IsRequired().HasColumnName("Operator Id");

@@ -10,6 +10,8 @@ namespace ServerApp.Data.Configurations
         {
             clientBuilder.HasKey(c => c.Id);
 
+            clientBuilder.HasOne(c => c.Table).WithMany(t => t.Clients).HasForeignKey(c => c.TableId);
+
             clientBuilder.Property(c => c.TableId).IsRequired().HasColumnName("Table number");
         }
     }
