@@ -16,11 +16,11 @@ namespace ServerApp.Data
 
             try
             {
-                optionsBuilder.UseSqlServer(connectionString: "Server=localhost;Database=HoldDb;TrustServerCertificate=True;Integrated Security=SSPI;");
+                optionsBuilder.UseSqlServer(connectionString: "Server=localhost;Database=TableDb;TrustServerCertificate=True;Integrated Security=SSPI;");
             }
             catch (Exception)
             {
-                optionsBuilder.UseSqlServer(connectionString: "Server=localhost;Database=HoldDb;User Id=myUsername;Password=myPassword;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(connectionString: "Server=localhost;Database=TableDb;User Id=myUsername;Password=myPassword;TrustServerCertificate=True;");
             }
         }
 
