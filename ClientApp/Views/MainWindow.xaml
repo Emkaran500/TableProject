@@ -10,15 +10,15 @@
     <Grid MouseDown="Grid_MouseDown">
         <Grid>
             <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Border Width="180" CornerRadius="15 0 0 15">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="#b2cc99" Offset="0"/>
-                        <GradientStop Color="#cae9ff" Offset="1"/>  
+                        <GradientStop Color="#cae9ff" Offset="1"/>
                         <!--<GradientStop Color="#a2d2ff" Offset="0"/>-->
                     </LinearGradientBrush>
                 </Border.Background>
@@ -30,12 +30,12 @@
                         <GradientStop Color="#cae3b3" Offset="0"/>
                         <!--<GradientStop Color="#bbdefb" Offset="0"/>-->
                         <GradientStop Color="#e3f2fd" Offset="1"/>
-                        
+
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
         </Grid>
-        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -49,16 +49,18 @@
                 <TextBlock Text="Table" Style="{StaticResource menuButtonText}"/>
                 <TextBox Margin="0 5 40 5" Foreground="#443f5e" FontSize="20" VerticalAlignment="Bottom" Cursor="IBeam" Width="170"/>
 
-                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
-                <Button Style="{StaticResource staticMenuButton}" Content="       ▲" HorizontalAlignment="Left" FontSize="26"/>
-                <Button Style="{StaticResource staticMenuButton}" Content="       ▼" HorizontalAlignment="Left" FontSize="26"/>
-
-                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
                 <Button Style="{StaticResource menuButton}" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Create" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
+                
+                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
+                
+                <Button Style="{StaticResource staticMenuButton}" Content="       ▲" HorizontalAlignment="Left" FontSize="26"/>
+                <Button Style="{StaticResource staticMenuButton}" Content="       ▼" HorizontalAlignment="Left" FontSize="26"/>
+
+                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Left"/>
 
                 <Button Style="{StaticResource menuButton}" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
@@ -72,21 +74,10 @@
                     </StackPanel>
                 </Button>
 
-            
+
+                
+                
             </StackPanel>
-
-
-            <!-- User controls -->
-            <!--<Grid Grid.Column="1">
-                <ContentControl Content="{Binding ActiveViewModel}"></ContentControl>
-            </Grid>-->
-
-
-
-
-
         </Grid>
-
     </Grid>
-    
 </Window>
