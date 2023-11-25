@@ -1,0 +1,39 @@
+﻿<Window x:Class="ClientApp.Views.AuthorizationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientApp.Views"
+        mc:Ignorable="d"
+        Title="Authorization Window" Height="350" Width="350" AllowsTransparency="True" WindowStyle="None"        
+        WindowStartupLocation="CenterScreen" Background="Transparent">
+    
+    <Grid MouseDown="Grid_MouseDown">
+        <Grid>
+            <Border Grid.Column="1" CornerRadius="15 15 15 15">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#cae3b3" Offset="0"/>
+                        <GradientStop Color="#e3f2fd" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <StackPanel Width="200" Margin="0 30 0 30">
+                <TextBlock Margin="5 5 0 5" Text="Login" Style="{StaticResource menuButtonText}" HorizontalAlignment="Center"/>
+                <TextBox Margin="5 5 0 5" Foreground="#443f5e" FontSize="20" Cursor="IBeam" Width="170"/>
+                <TextBlock Margin="5 5 0 5" Text="Password" Style="{StaticResource menuButtonText}" HorizontalAlignment="Center"/>
+                <TextBox Margin="5 5 0 5" Foreground="#443f5e" FontSize="20" Cursor="IBeam" Width="170"/>
+
+                <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Center"/>
+                <Button Content="Enter" FontSize="20" Height="30" Width="100" Background="#b2cc99" Margin="0 5"/>
+                <Button Content="Cancel" FontSize="20" Height="30" Width="100" Background="#b2cc99" Margin="0 15" Click="ExitButton_Click"/>
+
+
+            </StackPanel>
+
+
+        </Grid>
+    </Grid>
+
+</Window>
