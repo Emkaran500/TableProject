@@ -9,6 +9,7 @@ namespace ServerApp.Data
         public DbSet<Table> Tables { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Operator> Operators { get; set; }
+        public DbSet<TableOperator> TableOperators { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,6 +30,7 @@ namespace ServerApp.Data
             modelBuilder.ApplyConfiguration(new ClientConfiguration());
             modelBuilder.ApplyConfiguration(new OperatorConfiguration());
             modelBuilder.ApplyConfiguration(new TableConfiguration());
+            modelBuilder.ApplyConfiguration(new TableOperatorConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
