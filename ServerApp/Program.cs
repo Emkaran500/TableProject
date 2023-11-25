@@ -24,12 +24,30 @@ internal class Program
         httpListener.Start();
         Console.WriteLine($"Server started on '{port}' port");
 
-        while (false)
+        while (true)
         {
             var context = await httpListener.GetContextAsync();
             var rawUrl = context.Request.RawUrl?.Trim('/').ToLower();
             using var writer = new StreamWriter(context.Response.OutputStream);
             var rawItems = rawUrl?.Split('/');
+
+            if (rawItems.First() == "clients")
+            {
+
+            }
+            else if (rawItems.First() == "operators")
+            {
+
+            }
+            else if (rawItems.First() == "tables")
+            {
+
+            }
+            else
+            {
+                context.Response.StatusCode = 404;
+                await writer.WriteLineAsync("Not Found 404!");
+            }
         }
     }
 }
