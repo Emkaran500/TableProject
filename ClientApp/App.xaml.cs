@@ -8,14 +8,14 @@ namespace ClientApp
     public partial class App : Application
     {
         //public static Container Container { get; set; } = new Container();
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            //this.RegisterContainer();
+        //protected override void OnStartup(StartupEventArgs e)
+        //{
+        //    this.RegisterContainer();
 
-            //this.Start<AuthorizationViewModel>();
+        //    this.Start<AuthorizationViewModel>();
 
-            //base.OnStartup(e);
-        }
+        //    base.OnStartup(e);
+        //}
 
         //private void Start<T>() where T : ViewModelBase
         //{
@@ -35,6 +35,5 @@ namespace ClientApp
 
         //    Container.Verify();
         //}
-
     }
 }
