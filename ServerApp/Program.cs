@@ -51,9 +51,9 @@ internal class Program
 
             if (context.Request.HttpMethod == HttpMethod.Get.Method)
             {
-                if (rawItems.First() == "clients")
+                if (rawItems?.FirstOrDefault() == "clients")
                 {
-                    if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "clients")
+                    if (rawItems.LastOrDefault() == "getall" && rawItems.SkipLast(1).Last() == "clients")
                     {
                         var jsonClients = JsonSerializer.Serialize(serverDbContext.Clients.AsEnumerable());
 
@@ -64,9 +64,9 @@ internal class Program
                         }
                     }
                 }
-                else if (rawItems.First() == "operators")
+                else if (rawItems?.FirstOrDefault() == "operators")
                 {
-                    if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "operators")
+                    if (rawItems?.LastOrDefault() == "getall" && rawItems.SkipLast(1).LastOrDefault() == "operators")
                     {
                         var jsonOperators = JsonSerializer.Serialize(serverDbContext.Operators.AsEnumerable());
 
@@ -99,13 +99,13 @@ internal class Program
             }
             else if (context.Request.HttpMethod == HttpMethod.Post.Method)
             {
-                if (rawItems.First() == "clients")
+                if (rawItems?.FirstOrDefault() == "clients")
                 {
                     var newClientJson = await reader.ReadToEndAsync();
                     try
                     {
-                        Client newClient = JsonSerializer.Deserialize<Client>(newClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                        newClient.Table = serverDbContext.Tables.First(t => t.Id == newClient.TableId);
+                        Client? newClient = JsonSerializer.Deserialize<Client>(newClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        newClient.Table = serverDbContext.Tables.FirstOrDefault(t => t.Id == newClient.TableId);
                         newClient.QueueNumber = serverDbContext.Clients.Where(c => c.TableId == newClient.TableId).Count() + 1;
                         serverDbContext.Clients.Add(newClient);
                         serverDbContext.SaveChanges();
@@ -126,13 +126,13 @@ internal class Program
             }
             else if (context.Request.HttpMethod == HttpMethod.Put.Method)
             {
-                if (rawItems.First() == "clients" && rawItems.Last().Contains("?up=") && rawItems.Length == 2)
+                if (rawItems?.FirstOrDefault() == "clients" && rawItems.Last().Contains("?up=") && rawItems.Length == 2)
                 {
                     var updatedClientJson = await reader.ReadToEndAsync();
 
                     try
                     {
-                        Client updatedClient = JsonSerializer.Deserialize<Client>(updatedClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        Client? updatedClient = JsonSerializer.Deserialize<Client>(updatedClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });                        
                         var oldClient = serverDbContext.Clients.First(c => c.Id == updatedClient.Id);
 
                         if (rawItems.Last().Contains("?up=true"))
@@ -196,9 +196,37 @@ internal class Program
             }
             else if (context.Request.HttpMethod == HttpMethod.Delete.Method)
             {
-                if (rawItems.First() == "clients" && rawItems.Length == 1)
+                if (rawItems?.FirstOrDefault() == "clients" && rawItems.Length == 2)
                 {
-
+                    try
+                    {
+                        if (rawItems.Last().Contains("?id="))
+                        {
+                            try
+                            {
+                                int.TryParse(rawItems.Last().Skip(4).ToArray(), out int id);
+                                Client? removingClient = serverDbContext.Clients.First(c => c.Id == id);
+                                serverDbContext.Clients.Remove(removingClient);
+                                serverDbContext.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                context.Response.StatusCode = 400;
+                                context.Response.ContentType = "plain/text";
+                                await writer.WriteLineAsync($"Error 400. Bad request! {ex.Message}");
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Wrong URL after /clients/!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        context.Response.StatusCode = 405;
+                        context.Response.ContentType = "plain/text";
+                        await writer.WriteLineAsync($"Error 405. Method not allowed! {ex.Message}");
+                    }
                 }
             }
         }
