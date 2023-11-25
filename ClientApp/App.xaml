@@ -2,11 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ClientApp"
-             StartupUri="MainWindow.xaml">
+             xmlns:v="clr-namespace:ClientApp.Views"
+             xmlns:vm="clr-namespace:ClientApp.ViewModels"
+             StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-
-
-
+        
+        <!--<DataTemplate DataType="{x:Type vm:AuthorizationViewModel}">
+            <v:AuthorizationView/>
+        </DataTemplate>-->
 
         <!-- Main menu buttons style -->
         <Style x:Key="menuButton" TargetType="Button">

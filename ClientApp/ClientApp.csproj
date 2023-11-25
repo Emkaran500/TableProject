@@ -2,11 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SharedLib\SharedLib.csproj" />
+	  <PackageReference Include="SimpleInjector" Version="5.4.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <PropertyGroup>
