@@ -207,6 +207,15 @@ internal class Program
                                 int.TryParse(rawItems.Last().Skip(4).ToArray(), out int id);
                                 Client? removingClient = serverDbContext.Clients.First(c => c.Id == id);
                                 serverDbContext.Clients.Remove(removingClient);
+
+                                var movingClients = serverDbContext.Clients.Where(c => c.QueueNumber > removingClient.QueueNumber);
+
+                                foreach (var movingClient in movingClients)
+                                {
+                                    movingClient.QueueNumber--;
+                                }
+                                serverDbContext.Clients.UpdateRange(movingClients);
+
                                 serverDbContext.SaveChanges();
                             }
                             catch (Exception ex)
