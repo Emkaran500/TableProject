@@ -26,9 +26,9 @@ namespace ServerApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new TableConfiguration());
             modelBuilder.ApplyConfiguration(new ClientConfiguration());
             modelBuilder.ApplyConfiguration(new OperatorConfiguration());
+            modelBuilder.ApplyConfiguration(new TableConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
