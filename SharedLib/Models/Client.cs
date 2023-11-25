@@ -7,5 +7,6 @@ namespace SharedLib.Models
         public int? Id { get; set; }
         public Table? Table { get; set; }
         public int TableId { get; set; }
+        public int QueueNumber { get; set; }
     }
 }

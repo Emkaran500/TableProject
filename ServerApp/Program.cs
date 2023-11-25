@@ -24,6 +24,8 @@ internal class Program
         {
             serverDbContext.Tables.AddRange(new Table { TableNumber = 1}, new Table { TableNumber = 2}, new Table { TableNumber = 3}, new Table { TableNumber = 4}, new Table { TableNumber = 5});
         }
+        serverDbContext.SaveChanges();
+
         if (serverDbContext.TableOperators.Any() == false)
         {
             serverDbContext.TableOperators.AddRange(new TableOperator { OperatorId = 1, TableId = 1}, new TableOperator { OperatorId = 2, TableId = 2}, new TableOperator { OperatorId = 3, TableId = 3}, new TableOperator { OperatorId = 4, TableId = 4}, new TableOperator { OperatorId = 5, TableId = 5});
@@ -104,6 +106,7 @@ internal class Program
                     {
                         Client newClient = JsonSerializer.Deserialize<Client>(newClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                         newClient.Table = serverDbContext.Tables.First(t => t.Id == newClient.TableId);
+                        newClient.QueueNumber = serverDbContext.Clients.Where(c => c.TableId == newClient.TableId).Count() + 1;
                         serverDbContext.Clients.Add(newClient);
                         serverDbContext.SaveChanges();
                     }

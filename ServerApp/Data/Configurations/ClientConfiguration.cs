@@ -13,6 +13,8 @@ namespace ServerApp.Data.Configurations
             clientBuilder.HasOne(c => c.Table).WithMany(t => t.Clients).HasForeignKey(c => c.TableId);
 
             clientBuilder.Property(c => c.TableId).IsRequired().HasColumnName("Table number");
+
+            clientBuilder.Property(c => c.QueueNumber).IsRequired().HasColumnName("Number in queue");
         }
     }
 }
