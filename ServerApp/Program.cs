@@ -31,11 +31,11 @@ internal class Program
             var rawItems = rawUrl?.Split('/');
             context.Response.ContentType = "application/json";
 
-            if (rawItems.First() == "clients")
+            if (context.Request.HttpMethod == HttpMethod.Get.Method)
             {
-                if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "clients")
+                if (rawItems.First() == "clients")
                 {
-                    if (context.Request.HttpMethod == HttpMethod.Get.Method)
+                    if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "clients")
                     {
                         var jsonClients = JsonSerializer.Serialize(serverDbContext.Clients.AsEnumerable());
 
@@ -46,28 +46,9 @@ internal class Program
                         }
                     }
                 }
-                else if (int.TryParse(rawItems.Last(), out int id) && rawItems.SkipLast(1).Last() == "clients")
+                else if (rawItems.First() == "operators")
                 {
-                    var jsonClients = JsonSerializer.Serialize(serverDbContext.Clients.First(c => c.Id == id));
-
-                    if (jsonClients != null)
-                    {
-                        context.Response.StatusCode = 200;
-                        await writer.WriteLineAsync(jsonClients);
-                    }
-                }
-                else
-                {
-                    context.Response.StatusCode = 400;
-                    context.Response.ContentType = "plain/text";
-                    await writer.WriteLineAsync("Error 400. Bad request!");
-                }
-            }
-            else if (rawItems.First() == "operators")
-            {
-                if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "operators")
-                {
-                    if (context.Request.HttpMethod == HttpMethod.Get.Method)
+                    if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "operators")
                     {
                         var jsonOperators = JsonSerializer.Serialize(serverDbContext.Operators.AsEnumerable());
 
@@ -78,28 +59,9 @@ internal class Program
                         }
                     }
                 }
-                else if (int.TryParse(rawItems.Last(), out int id) && rawItems.SkipLast(1).Last() == "operators")
+                else if (rawItems.First() == "tables")
                 {
-                    var jsonOperators = JsonSerializer.Serialize(serverDbContext.Operators.First(c => c.Id == id));
-
-                    if (jsonOperators != null)
-                    {
-                        context.Response.StatusCode = 200;
-                        await writer.WriteLineAsync(jsonOperators);
-                    }
-                }
-                else
-                {
-                    context.Response.StatusCode = 400;
-                    context.Response.ContentType = "plain/text";
-                    await writer.WriteLineAsync("Error 400. Bad request!");
-                }
-            }
-            else if (rawItems.First() == "tables")
-            {
-                if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "tables")
-                {
-                    if (context.Request.HttpMethod == HttpMethod.Get.Method)
+                    if (rawItems.Last() == "getall" && rawItems.SkipLast(1).Last() == "tables")
                     {
                         var jsonTables = JsonSerializer.Serialize(serverDbContext.Tables.AsEnumerable());
 
@@ -110,27 +72,24 @@ internal class Program
                         }
                     }
                 }
-                else if (int.TryParse(rawItems.Last(), out int id) && rawItems.SkipLast(1).Last() == "tables")
-                {
-                    var jsonTables = JsonSerializer.Serialize(serverDbContext.Tables.First(c => c.Id == id));
-
-                    if (jsonTables != null)
-                    {
-                        context.Response.StatusCode = 200;
-                        await writer.WriteLineAsync(jsonTables);
-                    }
-                }
                 else
                 {
-                    context.Response.StatusCode = 400;
+                    context.Response.StatusCode = 404;
                     context.Response.ContentType = "plain/text";
-                    await writer.WriteLineAsync("Error 400. Bad request!");
+                    await writer.WriteLineAsync("Error 404. Not Found!");
                 }
             }
-            else
+            else if (context.Request.HttpMethod == HttpMethod.Post.Method)
             {
-                context.Response.StatusCode = 404;
-                await writer.WriteLineAsync("Error 404. Not Found!");
+
+            }
+            else if (context.Request.HttpMethod == HttpMethod.Put.Method)
+            {
+
+            }
+            else if (context.Request.HttpMethod == HttpMethod.Delete.Method)
+            {
+
             }
         }
     }
