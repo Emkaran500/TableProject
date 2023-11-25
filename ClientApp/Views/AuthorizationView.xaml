@@ -21,18 +21,14 @@
 
             <StackPanel Width="200" Margin="0 30 0 30">
                 <TextBlock Margin="5 5 0 5" Text="Login" Style="{StaticResource menuButtonText}" HorizontalAlignment="Center"/>
-                <TextBox Margin="5 5 0 5" Foreground="#443f5e" FontSize="20" Cursor="IBeam" Width="170"/>
+                <TextBox x:Name="loginTextBox" Margin="5 5 0 5" Foreground="#443f5e" FontSize="20" Cursor="IBeam" Width="170"/>
                 <TextBlock Margin="5 5 0 5" Text="Password" Style="{StaticResource menuButtonText}" HorizontalAlignment="Center"/>
-                <TextBox Margin="5 5 0 5" Foreground="#443f5e" FontSize="20" Cursor="IBeam" Width="170"/>
+                <TextBox  x:Name="passswordTextBox" Margin="5 5 0 5" Foreground="#443f5e" FontSize="20" Cursor="IBeam" Width="170"/>
 
                 <Separator Background="#08206E" Width="150" Margin="10" HorizontalAlignment="Center"/>
-                <Button Content="Enter" FontSize="20" Height="30" Width="100" Background="#b2cc99" Margin="0 5"/>
+                <Button Content="Enter" FontSize="20" Height="30" Width="100" Background="#b2cc99" Margin="0 5" Click="EnterButton_Click"/>
                 <Button Content="Cancel" FontSize="20" Height="30" Width="100" Background="#b2cc99" Margin="0 15" Click="ExitButton_Click"/>
-
-
             </StackPanel>
-
-
         </Grid>
     </Grid>
 

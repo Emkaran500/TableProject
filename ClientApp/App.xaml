@@ -5,11 +5,12 @@
              xmlns:v="clr-namespace:ClientApp.Views"
              xmlns:vm="clr-namespace:ClientApp.ViewModels"
              StartupUri="Views/MainWindow.xaml">
+    <!--AuthorizationView/MainWindow-->
     <Application.Resources>
         
-        <!--<DataTemplate DataType="{x:Type vm:AuthorizationViewModel}">
-            <v:AuthorizationView/>
-        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <v:MainWindow/>
+        </DataTemplate>
 
         <!-- Main menu buttons style -->
         <Style x:Key="menuButton" TargetType="Button">
