@@ -125,7 +125,24 @@ internal class Program
             }
             else if (context.Request.HttpMethod == HttpMethod.Put.Method)
             {
+                if (rawItems.First() == "clients" && rawItems.Length == 1)
+                {
+                    var updatedClientJson = await reader.ReadToEndAsync();
 
+                    try
+                    {
+                        Client updatedClient = JsonSerializer.Deserialize<Client>(updatedClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        var oldClient = serverDbContext.Clients.First(c => c.Id == updatedClient.Id);
+                        oldClient = updatedClient;
+                        serverDbContext.Clients.Update(oldClient);
+                        serverDbContext.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Couldn't change client! {ex.Message}");
+                        continue;
+                    }
+                }
             }
             else if (context.Request.HttpMethod == HttpMethod.Delete.Method)
             {
