@@ -112,8 +112,9 @@ internal class Program
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Couldn't add client! {ex.Message}");
-                        continue;
+                        context.Response.StatusCode = 405;
+                        context.Response.ContentType = "plain/text";
+                        await writer.WriteLineAsync($"Error 405. Method not allowed! {ex.Message}");
                     }
                 }
                 else
@@ -125,7 +126,7 @@ internal class Program
             }
             else if (context.Request.HttpMethod == HttpMethod.Put.Method)
             {
-                if (rawItems.First() == "clients" && rawItems.Length == 1)
+                if (rawItems.First() == "clients" && rawItems.Last().Contains("?up=") && rawItems.Length == 2)
                 {
                     var updatedClientJson = await reader.ReadToEndAsync();
 
@@ -133,20 +134,72 @@ internal class Program
                     {
                         Client updatedClient = JsonSerializer.Deserialize<Client>(updatedClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                         var oldClient = serverDbContext.Clients.First(c => c.Id == updatedClient.Id);
-                        oldClient = updatedClient;
-                        serverDbContext.Clients.Update(oldClient);
-                        serverDbContext.SaveChanges();
+
+                        if (rawItems.Last().Contains("?up=true"))
+                        {
+                            if (updatedClient.QueueNumber >= oldClient.QueueNumber)
+                            {
+                                throw new Exception("Wrong use of '?up'!");
+                            }
+
+                            if (updatedClient.QueueNumber <= 1 || oldClient.QueueNumber - updatedClient.QueueNumber > 1)
+                            {
+                                context.Response.StatusCode = 405;
+                                context.Response.ContentType = "plain/text";
+                                await writer.WriteLineAsync("Error 405. Method not allowed!");
+                            }
+                            else
+                            {
+                                Client deposedClient = serverDbContext.Clients.First(c => c.TableId == updatedClient.TableId && c.QueueNumber == updatedClient.QueueNumber);
+                                deposedClient.QueueNumber = oldClient.QueueNumber;
+                                oldClient.QueueNumber = updatedClient.QueueNumber;
+                                serverDbContext.UpdateRange(oldClient, deposedClient);
+                                serverDbContext.SaveChanges();
+                            }
+                        }
+                        else if (rawItems.Last().Contains("?up=false"))
+                        {
+                            if (updatedClient.QueueNumber <= oldClient.QueueNumber)
+                            {
+                                throw new Exception("Wrong use of '?up'!");
+                            }
+                            
+                            if (updatedClient.QueueNumber == 1 || updatedClient.QueueNumber - oldClient.QueueNumber > 1 || serverDbContext.Clients.FirstOrDefault(c => c.TableId == oldClient.TableId && c.QueueNumber > oldClient.QueueNumber) == null)
+                            {
+                                context.Response.StatusCode = 405;
+                                context.Response.ContentType = "plain/text";
+                                await writer.WriteLineAsync("Error 405. Method not allowed!");
+                            }
+                            else
+                            {
+                                Client deposedClient = serverDbContext.Clients.First(c => c.TableId == updatedClient.TableId && c.QueueNumber == updatedClient.QueueNumber);
+                                deposedClient.QueueNumber = oldClient.QueueNumber;
+                                oldClient.QueueNumber = updatedClient.QueueNumber;
+                                serverDbContext.UpdateRange(oldClient, deposedClient);
+                                serverDbContext.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            context.Response.StatusCode = 400;
+                            context.Response.ContentType = "plain/text";
+                            await writer.WriteLineAsync("Error 400. Bad request!");
+                        }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Couldn't change client! {ex.Message}");
-                        continue;
+                        context.Response.StatusCode = 405;
+                        context.Response.ContentType = "plain/text";
+                        await writer.WriteLineAsync($"Error 405. Method not allowed! {ex.Message}");
                     }
                 }
             }
             else if (context.Request.HttpMethod == HttpMethod.Delete.Method)
             {
+                if (rawItems.First() == "clients" && rawItems.Length == 1)
+                {
 
+                }
             }
         }
     }
