@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Height="600" Width="1000" AllowsTransparency="True" WindowStyle="None"        
         WindowStartupLocation="CenterScreen" Background="Transparent">
+    
     <Grid MouseDown="Grid_MouseDown">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -27,10 +28,9 @@
             <Border Grid.Column="1" CornerRadius="0 15 15 0">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#cae3b3" Offset="0"/>
+                        <GradientStop Color="#b9cfa5" Offset="0"/>
                         <!--<GradientStop Color="#bbdefb" Offset="0"/>-->
                         <GradientStop Color="#e3f2fd" Offset="1"/>
-
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
@@ -73,11 +73,32 @@
                         <TextBlock Text="Exit" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
-
-
-                
-                
             </StackPanel>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Table 1" HorizontalAlignment="Center" FontSize="16" Foreground="#443f5e" Margin="5"/>
+                <ListBox Grid.Column="0" Background="Transparent" Padding="10" Margin="10 30 10 10">Nijat - 1:15</ListBox>
+
+                <TextBlock Grid.Column="1" Text="Table 2" HorizontalAlignment="Center" FontSize="16" Foreground="#443f5e" Margin="5"/>
+                <ListBox Grid.Column="1" Background="Transparent" Padding="10" Margin="10 30 10 10">sdfsdf - 2:4</ListBox>
+
+                <TextBlock Grid.Column="2" Text="Table 3" HorizontalAlignment="Center" FontSize="16" Foreground="#443f5e" Margin="5"/>
+                <ListBox Grid.Column="2" Background="Transparent" Padding="10" Margin="10 30 10 10">Nijat - 3:25</ListBox>
+
+                <TextBlock Grid.Column="3" Text="Table 4" HorizontalAlignment="Center" FontSize="16" Foreground="#443f5e" Margin="5"/>
+                <ListBox Grid.Column="3" Background="Transparent" Padding="10" Margin="10 30 10 10">Nijat - 4:66</ListBox>
+
+                <TextBlock Grid.Column="4" Text="Table 5" HorizontalAlignment="Center" FontSize="16" Foreground="#443f5e" Margin="5"/>
+                <ListBox Grid.Column="4" Background="Transparent" Padding="10" Margin="10 30 10 10">Nijat - 5:9</ListBox>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
