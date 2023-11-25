@@ -6,8 +6,7 @@ namespace SharedLib.Models
     {
         public int Id { get; set; }
         public int TableNumber { get; set; }
-        public Operator Operator { get; set; }
-        public int OperatorId { get; set; }
+        public TableOperator TableOperator { get; set; }
         public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
     }
 }
