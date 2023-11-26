@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using ServerApp.Data;
 using ServerApp.Repositories;
 using ServerApp.Repositories.Base;
@@ -93,70 +94,31 @@ namespace ServerApp.Functions
             if (rawItems?.FirstOrDefault() == "clients" && rawItems.Last().Contains("?up=") && rawItems.Length == 2)
             {
                 var updatedClientJson = await reader.ReadToEndAsync();
+                
+                Client? updatedClient = JsonSerializer.Deserialize<Client>(updatedClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, ReferenceHandler = ReferenceHandler.Preserve });                        
 
-                try
+                if (rawItems.Last().Contains("?up=true"))
                 {
-                    Client? updatedClient = JsonSerializer.Deserialize<Client>(updatedClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });                        
-                    var oldClient = serverDbContext.Clients.First(c => c.Id == updatedClient.Id);
-
-                    if (rawItems.Last().Contains("?up=true"))
-                    {
-                        if (updatedClient.QueueNumber >= oldClient.QueueNumber)
-                        {
-                            throw new Exception("Wrong use of '?up'!");
-                        }
-
-                        if (updatedClient.QueueNumber <= 1 || oldClient.QueueNumber - updatedClient.QueueNumber > 1)
-                        {
-                            context.Response.StatusCode = 405;
-                            context.Response.ContentType = "plain/text";
-                            await writer.WriteLineAsync("Error 405. Method not allowed!");
-                        }
-                        else
-                        {
-                            Client deposedClient = serverDbContext.Clients.First(c => c.TableId == updatedClient.TableId && c.QueueNumber == updatedClient.QueueNumber);
-                            deposedClient.QueueNumber = oldClient.QueueNumber;
-                            oldClient.QueueNumber = updatedClient.QueueNumber;
-                            serverDbContext.UpdateRange(oldClient, deposedClient);
-                            serverDbContext.SaveChanges();
-                        }
-                    }
-                    else if (rawItems.Last().Contains("?up=false"))
-                    {
-                        if (updatedClient.QueueNumber <= oldClient.QueueNumber)
-                        {
-                            throw new Exception("Wrong use of '?up'!");
-                        }
-                            
-                        if (updatedClient.QueueNumber == 1 || updatedClient.QueueNumber - oldClient.QueueNumber > 1 || serverDbContext.Clients.FirstOrDefault(c => c.TableId == oldClient.TableId && c.QueueNumber > oldClient.QueueNumber) == null)
-                        {
-                            context.Response.StatusCode = 405;
-                            context.Response.ContentType = "plain/text";
-                            await writer.WriteLineAsync("Error 405. Method not allowed!");
-                        }
-                        else
-                        {
-                            Client deposedClient = serverDbContext.Clients.First(c => c.TableId == updatedClient.TableId && c.QueueNumber == updatedClient.QueueNumber);
-                            deposedClient.QueueNumber = oldClient.QueueNumber;
-                            oldClient.QueueNumber = updatedClient.QueueNumber;
-                            serverDbContext.UpdateRange(oldClient, deposedClient);
-                            serverDbContext.SaveChanges();
-                        }
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = 400;
-                        context.Response.ContentType = "plain/text";
-                        await writer.WriteLineAsync("Error 400. Bad request!");
-                    }
+                    clientRepository.UpdateUp(updatedClient, context, writer, serverDbContext);
                 }
-                catch (Exception ex)
+                else if (rawItems.Last().Contains("?up=false"))
                 {
-                    context.Response.StatusCode = 405;
+                    clientRepository.UpdateDown(updatedClient, context, writer, serverDbContext);
+                }
+                else
+                {
+                    context.Response.StatusCode = 400;
                     context.Response.ContentType = "plain/text";
-                    await writer.WriteLineAsync($"Error 405. Method not allowed! {ex.Message}");
+                    await writer.WriteLineAsync("Error 400. Bad request!");
                 }
             }
+            else
+            {
+                context.Response.StatusCode = 400;
+                context.Response.ContentType = "plain/text";
+                await writer.WriteLineAsync("Error 400. Bad request!");
+            }
+            writer.Dispose();
         }
 
         public static async Task HttpDeleteMethods(HttpListenerContext? context, string[]? rawItems, StreamWriter writer, ServerDbContext serverDbContext)
