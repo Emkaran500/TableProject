@@ -32,7 +32,7 @@ namespace ServerApp.Repositories
 
         public async Task SentAll(HttpListenerContext? context, StreamWriter writer, ServerDbContext serverDbContext)
         {
-            var jsonClients = JsonSerializer.Serialize(serverDbContext.Clients.AsEnumerable(), options: new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve });
+            var jsonClients = JsonSerializer.Serialize(serverDbContext.Clients.OrderBy(c => c.TableId).AsEnumerable(), options: new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve });
 
             if (jsonClients != null)
             {
