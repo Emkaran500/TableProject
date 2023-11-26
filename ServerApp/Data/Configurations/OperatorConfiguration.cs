@@ -10,7 +10,9 @@ namespace ServerApp.Data.Configurations
         {
             operatorBuilder.HasKey(o => o.Id);
 
-            operatorBuilder.Property(o => o.Name).HasMaxLength(50);
+            operatorBuilder.Property(o => o.Name).IsRequired().HasMaxLength(50);
+
+            operatorBuilder.Property(o => o.Pass).IsRequired().HasMaxLength(20);
         }
     }
 }

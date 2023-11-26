@@ -31,7 +31,7 @@ internal class Program
 
             if (context.Request.HttpMethod == HttpMethod.Get.Method)
             {
-                ServerDbFunctions.HttpGetMethods(context, rawItems, writer, serverDbContext);
+                ServerDbFunctions.HttpGetMethods(context, rawItems, writer, reader, serverDbContext);
             }
             else if (context.Request.HttpMethod == HttpMethod.Post.Method)
             {

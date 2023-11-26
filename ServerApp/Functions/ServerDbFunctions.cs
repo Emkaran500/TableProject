@@ -30,7 +30,7 @@ namespace ServerApp.Functions
 
             if (serverDbContext.Operators.Any() == false)
             {
-                serverDbContext.Operators.AddRange(new Operator { Name = "Emil"}, new Operator { Name = "Nijat"}, new Operator { Name = "Ayhan"}, new Operator { Name = "Qasim"}, new Operator { Name = "Raul"});
+                serverDbContext.Operators.AddRange(new Operator { Name = "Emil", Pass = "111"}, new Operator { Name = "Nijat", Pass = "222"}, new Operator { Name = "Ayhan", Pass = "333"}, new Operator { Name = "Qasim", Pass = "444"}, new Operator { Name = "Raul", Pass = "555"});
             }
             if (serverDbContext.Tables.Any() == false)
             {
@@ -52,7 +52,7 @@ namespace ServerApp.Functions
             Console.WriteLine($"Server started on '{port}' port");
         }
 
-        public async static Task HttpGetMethods(HttpListenerContext? context, string[]? rawItems, StreamWriter writer, ServerDbContext serverDbContext)
+        public async static Task HttpGetMethods(HttpListenerContext? context, string[]? rawItems, StreamWriter writer, StreamReader reader, ServerDbContext serverDbContext)
         {
             if (rawItems?.FirstOrDefault() == "clients" && rawItems.Length == 1)
             {
@@ -60,9 +60,19 @@ namespace ServerApp.Functions
             }
             else if (rawItems?.FirstOrDefault() == "operators")
             {
-                operatorRepository.SentAll(context, writer, serverDbContext);
+                if (rawItems.Last() == "autorisation" && rawItems.Length == 2)
+                {
+                    var questionOperatorJson = await reader.ReadToEndAsync();
+                    Operator? questionOperator = JsonSerializer.Deserialize<Operator>(questionOperatorJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, ReferenceHandler = ReferenceHandler.Preserve });
+
+                    operatorRepository.CheckAutorisation(questionOperator, context, writer, serverDbContext);
+                }
+                else
+                {
+                    operatorRepository.SentAll(context, writer, serverDbContext);
+                }
             }
-            else if (rawItems.First() == "tables")
+            else if (rawItems.First() == "tables" && rawItems.Length == 1)
             {
                 tableRepository.SentAll(context, writer, serverDbContext);
             }
