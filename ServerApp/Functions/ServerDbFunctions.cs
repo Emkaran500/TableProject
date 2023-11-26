@@ -78,21 +78,7 @@ namespace ServerApp.Functions
         {
             if (rawItems?.FirstOrDefault() == "clients")
             {
-                var newClientJson = await reader.ReadToEndAsync();
-                try
-                {
-                    Client? newClient = JsonSerializer.Deserialize<Client>(newClientJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    newClient.Table = serverDbContext.Tables.FirstOrDefault(t => t.Id == newClient.TableId);
-                    newClient.QueueNumber = serverDbContext.Clients.Where(c => c.TableId == newClient.TableId).Count() + 1;
-                    serverDbContext.Clients.Add(newClient);
-                    serverDbContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    context.Response.StatusCode = 405;
-                    context.Response.ContentType = "plain/text";
-                    await writer.WriteLineAsync($"Error 405. Method not allowed! {ex.Message}");
-                }
+                clientRepository.Add(context, writer, reader, serverDbContext);
             }
             else
             {

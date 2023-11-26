@@ -7,6 +7,6 @@ namespace ServerApp.Repositories.Base
     public interface IClientRepository
     {
         public Task SentAll(HttpListenerContext? context, StreamWriter writer, ServerDbContext serverDbContext);
-        public void Add(Client order);
+        public Task Add(HttpListenerContext? context, StreamWriter writer, StreamReader reader, ServerDbContext serverDbContext);
     }
 }

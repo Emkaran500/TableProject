@@ -17,8 +17,8 @@ namespace ServerApp.Repositories
             {
                 context.Response.StatusCode = 200;
                 await writer.WriteLineAsync(jsonOperators);
-                writer.Dispose();
             }
+            writer.Dispose();
         }
     }
 }

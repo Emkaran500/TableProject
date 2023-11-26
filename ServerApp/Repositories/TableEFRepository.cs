@@ -19,8 +19,8 @@ namespace ServerApp.Repositories
             {
                 context.Response.StatusCode = 200;
                 await writer.WriteLineAsync(jsonTables);
-                writer.Dispose();
             }
+            writer.Dispose();
         }
     }
 }
