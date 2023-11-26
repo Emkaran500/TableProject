@@ -1,4 +1,8 @@
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using ServerApp.Data;
 using ServerApp.Repositories.Base;
 using SharedLib.Models;
 
@@ -6,19 +10,17 @@ namespace ServerApp.Repositories
 {
     public class TableEFRepository : ITableRepository
     {
-        public ObservableCollection<Client> GetClients()
+        public async Task SentAll(HttpListenerContext? context, StreamWriter writer, ServerDbContext serverDbContext)
         {
-            throw new NotImplementedException();
-        }
+            var jsonTables = JsonSerializer.Serialize(serverDbContext.Tables.AsEnumerable(), options: new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve });
+            System.Console.WriteLine("Hiiii");
 
-        public int GetId()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Operator GetOperator()
-        {
-            throw new NotImplementedException();
+            if (jsonTables != null)
+            {
+                context.Response.StatusCode = 200;
+                await writer.WriteLineAsync(jsonTables);
+                writer.Dispose();
+            }
         }
     }
 }
