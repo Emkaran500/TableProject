@@ -10,5 +10,6 @@ namespace ServerApp.Repositories.Base
         public Task Add(HttpListenerContext? context, StreamWriter writer, StreamReader reader, ServerDbContext serverDbContext);
         public Task UpdateUp(Client? updatedClient, HttpListenerContext? context, StreamWriter writer, ServerDbContext serverDbContext);
         public Task UpdateDown(Client? updatedClient, HttpListenerContext? context, StreamWriter writer, ServerDbContext serverDbContext);
+        public Task Delete(HttpListenerContext? context, string[]? rawItems, StreamWriter writer, ServerDbContext serverDbContext);
     }
 }
